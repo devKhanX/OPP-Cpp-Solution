@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+class deliveryService
+{
+	protected:
+	int id;
+	float cost;
+	string name;
+	public:
+	void displayInfo(int id ,float cost ,string name)
+	{
+		cout<<"DELIVERY INFORMATION "<<endl;
+		cout<<"ID : "<<id<<endl;
+		cout<<"COST : "<<cost<<endl;
+		cout<<"Customer : "<<name<<endl;
+	}
+};
+class expressService :public deliveryService
+{
+	private:
+	string priorityLevel;
+	public:
+	using deliveryService::displayInfo ;
+	void displayInfo(int id ,float cost ,string name,string priorityLevel)
+	{
+		cout<<"-------DELIVERY INFORMATION EXPRESS SERVICE -------"<<endl;
+		cout<<"ID : "<<id<<endl;
+		cout<<"COST : "<<cost<<endl;
+		cout<<"Customer : "<<name<<endl;
+		cout<<"PRIORITY LEVEL : "<<priorityLevel;
+	}
+};
+int main()
+{
+       expressService d1;
+		expressService d2;
+		d1.displayInfo(100,300,"Ali");
+		d2.displayInfo(100,400,"Zubair","High");
+}
