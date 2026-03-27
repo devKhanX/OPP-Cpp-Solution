@@ -1,0 +1,176 @@
+#include<iostream>
+using namespace std;
+class Hero
+{
+	protected:
+	string name;
+	string type;
+	int health;
+	double power;
+	int experience;
+	public:
+	virtual double attack()=0;
+	virtual double defend (double damage)=0;
+	Hero(string n, string t, int h, double p, int e)
+	{
+	name = n;
+    type = t;
+    health = h;
+    power = p;
+    experience = e;
+	}
+	void showGameMessage() 
+	{
+    cout<<"Welcome to the Fantasy Battle Arena!"<<endl;
+	}
+    void displayInfo()
+    {
+    	cout<<"Name : "<<name<<endl;
+    	cout<<"Type : "<<type<<endl;
+    	cout<<"Health : "<<health<<endl;
+    	cout<<"Power : "<<power<<endl;
+    	cout<<"Experience : "<<experience<<endl;
+	}
+};
+class Warrior:public Hero
+{
+	private:
+	string weaponName;
+	double armorStrength;
+	int rageLevel;
+	public:
+	Warrior(string n, string t, int h, double p, int e, string wp, double aS, int rL): Hero(n, t, h, p, e)
+	{
+	weaponName = wp;
+    armorStrength = aS;
+    rageLevel = rL;
+	}
+	double attack()
+	{
+		return power *(1 + rageLevel /100.0);
+	}
+	double defend(double damage)
+	{
+		return damage - (armorStrength * 0.5);
+	}
+	void display()
+	{
+		cout<<"------Warrior Special Info-----"<<endl;
+		cout<<"Weapon Name : "<<weaponName<<endl;
+		cout<<"Armor Strength : "<<armorStrength<<endl;
+		cout<< "Rage Level : "<<rageLevel<<endl;
+	}
+};
+class Mage:public Hero
+{
+	private:
+	string spellName;
+	int manaPoints;
+	double magicMultiplier;
+	public:
+	Mage(string n, string t, int h, double p, int e, string sN, int mP, double mM): Hero(n, t, h, p, e)
+	{
+		spellName=sN;
+		manaPoints=mP;
+		magicMultiplier = mM;
+	}
+	double attack()
+	{
+		return power*magicMultiplier+manaPoints * 0.3;
+	}
+	double defend(double damage)
+	{
+		 return damage - (manaPoints * 0.2);
+	}
+	void display()
+	{
+		cout<<"-----Mage Special Info-----"<<endl;
+		cout<<"Spell Name : "<<spellName<<endl;
+		cout<<"Mana Points : "<<manaPoints<<endl;
+		cout<<"Magic Multiplier : "<<magicMultiplier<<endl;
+	}
+};
+class Archer:public Hero
+{
+	private:
+	string bowType;
+	int numberOfArrows;
+	double accuracyRate;
+	public:
+	Archer(string n, string t, int h, double p, int e, string bT, int nA, double aR): Hero(n, t, h, p, e)
+	{
+		bowType=bT;
+		numberOfArrows=nA;
+		accuracyRate=aR;
+	}
+	double attack()
+	{
+		return power * accuracyRate + numberOfArrows * 0.1;
+	}
+	double defend(double damage)
+	{
+		return damage - (accuracyRate * 10);
+	}
+	void display()
+	{
+		cout<<"-----Archer Special Info-----"<<endl;
+		cout<<"Bow Type : "<<bowType<<endl;
+		cout<<"Number of Arrows : "<<numberOfArrows<<endl;	
+		cout<<"Accuracy Rate : "<<accuracyRate<<endl;
+	}
+};
+int main()
+{
+	Warrior w1("Alpha", "Warrior", 100, 50, 20, "Axe", 30, 40);
+	Mage m1("Bravo", "Mage", 80, 60, 30, "Fireball", 100, 1.5);
+	Archer a1("Charlie", "Archer", 90, 45, 25, "Bow", 50, 0.8);
+
+	w1.showGameMessage();
+	cout<<endl;
+
+	cout<<"-------Hero Profiles-------"<<endl;
+	w1.displayInfo();
+	cout<<endl;
+	m1.displayInfo();
+	cout<<endl;
+	a1.displayInfo();
+	cout<<"-------Hero Special Attributes-------"<<endl;
+	cout<<endl;
+	w1.display();
+	cout<<endl;
+	m1.display();
+	cout<<endl;
+	a1.display();
+	cout<<endl;
+
+	cout<<"-------Battle Simulation-------"<<endl;
+
+	double wAttack = w1.attack();
+	double mAttack = m1.attack();
+	double aAttack = a1.attack();
+
+	double wDefend = w1.defend(50);
+	double mDefend = m1.defend(50);
+	double aDefend = a1.defend(50);
+
+	cout<<"Hero Battle Actions:"<<endl;
+	cout<<"Warrior Attack : "<<wAttack<<" | Defense : "<<wDefend<<endl;
+	cout<<"Mage    Attack : "<<mAttack<<" | Defense : "<<mDefend<<endl;
+	cout<<"Archer  Attack : "<<aAttack<<" | Defense : "<<aDefend<<endl;
+	cout<<endl;
+
+	cout<<"-------Battle Summary-------"<<endl;
+	cout<<"Hero\t\tAttack\tDefense"<<endl;
+	cout<<"Warrior\t\t"<<wAttack<<"\t"<<wDefend<<endl;
+	cout<<"Mage\t\t"<<mAttack<<"\t"<<mDefend<<endl;
+	cout<<"Archer\t\t"<<aAttack<<"\t"<<aDefend<<endl;
+	cout<<endl;
+
+	cout<<"Highest Attack Hero: ";
+	if (wAttack > mAttack && wAttack > aAttack)
+    	cout<<"Warrior"<<endl;
+	else if (mAttack > aAttack)
+    	cout<<"Mage"<<endl;
+	else
+    	cout<<"Archer"<<endl;
+}
